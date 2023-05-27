@@ -1,0 +1,2048 @@
+// Игроков Codebattle делят на пары для проведения одного раунда игр.
+// Из каждой пары всегда выходит один победитель. Новые раунды создаются до тех пор, пока не останется одна пара игроков.
+// Например, для 8 игроков будет проведено 3 раунда: 1/4 финала, 1/2 финала и финал.
+// Создайте функцию, которая принимает количество участников и возвращает количество раундов.
+// Примеры:
+// 1  == solution(2)
+// 4  == solution(16)
+// 5  == solution(32)
+// 3  == solution(8)
+
+// function solutionFin (participants) {
+//   let sum = 0
+//   const solution = (participants) => {
+//     const result = participants / 2;
+//     sum = sum + 1
+//     if (result === 1) {
+//       return sum;
+//     }
+//     return solution(result);
+//   };
+//   return solution(participants);
+// };
+// console.log(solutionFin(2));
+
+
+// Сэму и Фродо надо держаться вместе. Проверьте, нет ли между ними других персонажей.
+// Примеры:
+// true  == solution(["Sam","Frodo","Troll","Balrog","Human"])
+// false  == solution(["Orc","Frodo","Treant","Saruman","Sam"])
+// true  == solution(["Orc","Sam","Frodo","Gandalf","Legolas"])
+
+// const solution = (persons) => {
+//   const samIndex = persons.indexOf("Sam");
+//   if (persons[samIndex - 1] === "Frodo" || persons[samIndex + 1] === "Frodo") {
+//     return true
+//   };
+//   return false;
+// };
+// console.log(solution(["Orc","Frodo","Treant","Saruman","Sam"]));
+
+
+// Проверьте, начинаются ли все слова в строке с заглавной буквы.
+// Примеры:
+// false  == solution("There are three types of zeros in JS!")
+// true  == solution("Learn Clojure Be Happy!")
+// false  == solution("Learn Ruby win tournaments?!")
+// true  == solution("Simple Title.")
+
+// const solution = (title) => {
+//   const titleArr = title.split(' ');
+//   const result = titleArr.filter(word => word[0] === word[0].toUpperCase());
+//   if (result.length === titleArr.length) {
+//     return true;
+//   };
+//   return false;
+// };
+// console.log(solution("Learn Clojure Be Happy!"))
+
+
+// Если число делится на 3, верните "Fizz". Если число делится на 5, верните "Buzz". Если число делится на 3 и 5, верните "FizzBuzz". В ином случае верните пустую строку.
+// Примеры:
+// "Fizz"  == solution(3)
+// "Buzz"  == solution(50)
+// "FizzBuzz"  == solution(150)
+// "FizzBuzz"  == solution(5175)
+
+// const solution = (n) => {
+//   let value = ''
+//   if (n % 3 === 0 && n % 5 === 0) {
+//     value = "FizzBuzz";
+//   } else if (n % 3 === 0) {
+//     value = "Fizz";
+//   } else if (n % 5 === 0) {
+//     value = "Buzz";
+//   }
+//   return value;
+// };
+// console.log(solution(150));
+
+
+// Вычислите расстояние, которое лодка проходит через реку, учитывая ширину реки, скорость лодки, перпендикулярную реке, и скорость реки. Используйте округление в большую стороную.
+// Примеры:
+// 5.0  == solution(3, 6, 8)
+// 10.0  == solution(10, 10, 0)
+// 5.0  == solution(4, 3, 2)
+
+// const solution = (width, boat, river) => {
+//   const result = Math.ceil(Math.sqrt((width/boat*river)**2+width**2));
+//   return result;
+// };
+// console.log(solution(4, 3, 2));
+
+
+// HTML-дерево — JS: Деревья
+
+// import _ from 'lodash';
+
+// const tree = {
+//   name: 'html',
+//   type: 'tag-internal',
+//   children: [
+//     {
+//       name: 'body',
+//       type: 'tag-internal',
+//       children: [
+//         {
+//           name: 'h1',
+//           type: 'tag-internal',
+//           children: [
+//             {
+//               name: '',
+//               type: 'text',
+//               content: 'Сообщество',
+//             },
+//           ],
+//         },
+//         {
+//           name: 'p',
+//           type: 'tag-internal',
+//           children: [
+//             {
+//               type: 'text',
+//               content: 'Общение между пользователями Хекслета',
+//             },
+//           ],
+//         },
+//         {
+//           name: 'hr',
+//           className: 'hexlet-community',
+//           type: 'tag-leaf',
+//         },
+//         {
+//           name: 'input',
+//           className: 'some-class',
+//           type: 'tag-leaf',
+//         },
+//         {
+//           name: 'div',
+//           type: 'tag-internal',
+//           className: 'hexlet-community',
+//           children: [
+//             {
+//               name: 'div',
+//               type: 'tag-internal',
+//               className: 'text-xs-center',
+//               children: [],
+//             },
+//             {
+//               name: 'div',
+//               type: 'tag-internal',
+//               className: 'fa fa-spinner',
+//               children: [],
+//             },
+//           ],
+//         },
+//       ],
+//     },
+//   ],
+// };
+
+// const changeClass = (tree, classNameFrom, classNameTo) => {
+//   const innerFunc = (node) => {
+//     const updatedNode = { ...node };
+//     // console.log(JSON.stringify(updatedNode, null, 2));
+//     // console.log(_.has(node, 'className'));
+//     if (_.has(node, 'className')) {
+//       const newClassName = classNameFrom === node.className ? classNameTo : node.className;
+//       updatedNode.className = newClassName;
+//     }
+
+//     if (node.type === 'tag-internal') {
+//       const newChildren = node.children.map(innerFunc);
+//       updatedNode.children = newChildren;
+//     }
+
+//     return updatedNode;
+//   };
+
+//   return innerFunc(tree);
+// };
+
+// // // console.log(changeClass(tree, 'hexlet-community', 'new-class'))
+// const newHtmlTree = changeClass(tree, 'hexlet-community', 'new-class');
+// // console.log(JSON.stringify(newHtmlTree, null, 2));
+// // console.log(JSON.stringify(tree, null, 2));
+
+// // HTML-дерево — JS: Деревья
+
+// import _ from 'lodash';
+
+// const tree = {
+//   name: 'html',
+//   type: 'tag-internal',
+//   children: [
+//     {
+//       name: 'body',
+//       type: 'tag-internal',
+//       children: [
+//         {
+//           name: 'h1',
+//           type: 'tag-internal',
+//           children: [
+//             {
+//               name: '',
+//               type: 'text',
+//               content: 'Сообщество',
+//             },
+//           ],
+//         },
+//         {
+//           name: 'p',
+//           type: 'tag-internal',
+//           children: [
+//             {
+//               type: 'text',
+//               content: 'Общение между пользователями Хекслета',
+//             },
+//           ],
+//         },
+//         {
+//           name: 'hr',
+//           className: 'hexlet-community',
+//           type: 'tag-leaf',
+//         },
+//         {
+//           name: 'input',
+//           className: 'some-class',
+//           type: 'tag-leaf',
+//         },
+//         {
+//           name: 'div',
+//           type: 'tag-internal',
+//           className: 'hexlet-community',
+//           children: [
+//             {
+//               name: 'div',
+//               type: 'tag-internal',
+//               className: 'text-xs-center',
+//               children: [],
+//             },
+//             {
+//               name: 'div',
+//               type: 'tag-internal',
+//               className: 'fa fa-spinner',
+//               children: [],
+//             },
+//           ],
+//         },
+//       ],
+//     },
+//   ],
+// };
+
+// function changeClass(tree, oldClass, newClass) {
+//   const filtered = tree.children
+//   .map((node) => {
+//     if (node.type === 'tag-internal') {
+//       return changeClass(node);
+//     }
+//     return node;
+//   })
+//   .map((node) => {
+//       const { type } = node;
+//       // console.log(node['className']);
+//       console.log(oldClass);
+//       console.log(newClass);
+//       if (node['className'] === oldClass) {
+//         // console.log('попадание!!!')
+//         node['className'] = newClass;
+//       }
+//       switch (type) {
+//         case 'tag-internal':
+//           return node;
+//         case 'tag-leaf':
+//           return node;
+//         case 'text':
+//           return node;
+//         }
+//       })
+//   return { ...tree, children: filtered };
+// }
+
+// // console.log(changeClass(tree, 'hexlet-community', 'new-class'))
+// const newHtmlTree = changeClass(tree, 'hexlet-community', 'new-class');
+// console.log(JSON.stringify(newHtmlTree, null, 2));
+// // console.log(tree);
+
+// Аккумулятор — JS: Деревья
+
+// import path from 'path';
+// import _ from 'lodash';
+// import {
+//   mkfile, mkdir, isDirectory, isFile, map, getName, getChildren,
+// } from '@hexlet/immutable-fs-trees';
+
+// const tree = mkdir('/', [
+//   mkdir('etc', [
+//     mkdir('apache'),
+//     mkdir('nginx', [
+//       mkfile('nginx.conf', { size: 800 }),
+//     ]),
+//     mkdir('consul', [
+//       mkfile('config.json', { size: 1200 }),
+//       mkfile('data', { size: 8200 }),
+//       mkfile('raft', { size: 80 }),
+//     ]),
+//   ]),
+//   mkfile('hosts', { size: 3500 }),
+//   mkfile('resolve', { size: 1000 }),
+// ]);
+
+// const tree = mkdir('/', [
+//   mkdir('etc', [
+//     mkdir('apache'),
+//     mkdir('nginx', [
+//       mkfile('nginx.conf'),
+//     ]),
+//     mkdir('consul', [
+//       mkfile('config.json'),
+//       mkdir('data'),
+//     ]),
+//   ]),
+//   mkdir('logs'),
+//   mkfile('hosts'),
+// ]);
+
+// const newancestry = path.join(ancestry, name);
+// return children.flatMap((child) => iter(child, newAncestry));
+
+// function findFilesByName (tree, maxDepth = Infinity) {
+//   // Внутренняя функция, которая может передавать аккумулятор
+//   // В качестве аккумулятора выступает depth, переменная, содержащая текущую глубину
+//   const iter = (node, depth) => {
+//     const name = getName(node);
+//     const children = getChildren(node);
+//     // Если директория пустая, то добавляем ее в список
+//     if (children.length === 0) {
+//     // if () {
+//       return name;
+//     }
+//     // Если это второй уровень вложенности, и директория не пустая
+//     // то не имеет смысла смотреть дальше
+//     if (depth === maxDepth) {
+//       // Почему возвращается именно пустой массив?
+//       // Потому что снаружи выполняется flat
+//       // Он раскрывает пустые массивы
+//       return [];
+//     }
+//     // Оставляем только директории
+//     return children.filter(isDirectory)
+//       // Не забываем увеличивать глубину
+//       .flatMap((child) => iter(child, depth + 1));
+//   };
+//   // Начинаем с глубины 0
+//   return iter(tree, 0);
+// }
+
+// function findFilesByName(tree, word) {
+//   const iter = (node, ancestry) => {
+//     const name = getName(node);
+//     const children = getChildren(node) ?? [];
+//     const newAncestry = path.join(ancestry, name);
+//     if (name.includes(word) && isFile(node)) {  
+//       // console.log(newAncestry);
+//       // console.log(name, '- name после if');
+//       return newAncestry;
+//     }
+//     return children.flatMap((child) => iter(child, newAncestry))
+//   };
+//   return iter(tree, '');
+// };
+
+// console.log(tree);
+// console.log(findFilesByName(tree, 'nginx.conf'));
+// console.log(path.join('/foo', 'bar', 'baz/asdf', 'quux', '..'));
+
+// // Агрегация 2 — JS: Деревья
+
+// import _ from 'lodash';
+// import {
+//   mkfile, mkdir, isDirectory, isFile, map, getChildren, getName, getMeta,
+// } from '@hexlet/immutable-fs-trees';
+
+// const tree = mkdir('/', [
+//   mkdir('etc', [
+//     mkdir('apache'),
+//     mkdir('nginx', [
+//       mkfile('nginx.conf', { size: 800 }),
+//     ]),
+//     mkdir('consul', [
+//       mkfile('config.json', { size: 1200 }),
+//       mkfile('data', { size: 8200 }),
+//       mkfile('raft', { size: 80 }),
+//     ]),
+//   ]),
+//   mkfile('hosts', { size: 3500 }),
+//   mkfile('resolve', { size: 1000 }),
+// ]);
+
+// const getFilesCount = (node) => {
+//   if (isFile(node)) {
+//     return getMeta(node).size;
+//   }
+//   const children = getChildren(node);
+//   const descendantCounts = children.map(getFilesCount);
+//   let result = _.sum(descendantCounts);
+//   // result.sort(([, size1], [, size2]) => size2 - size1);
+//   console.log(result);
+//   return result;
+// };
+
+// const du = (tree) => {
+//   const children = getChildren(tree);
+//   const result = children
+//     .map((child) => [getName(child), getFilesCount(child)]);
+//   result.sort(([, size1], [, size2]) => size2 - size1);
+//   return result;
+// };
+
+// function du(tree) {
+//   if (isFile(tree)) {
+//     if (getName(tree)[0] === '.') {
+//     // Возвращаем 1 для учёта текущего файла
+//       return 1;// console.log(isFile(tree))
+//     }
+//     return 0;
+//   }
+
+//   // Если узел — директория, получаем его детей
+//   const children = getChildren(tree);
+//   // console.log(children);
+//   // Самая сложная часть
+//   // Считаем количество файлов для каждого из детей,
+//   // вызывая рекурсивно нашу функцию getNodesCount
+//   const descendantCounts = children.map(du);
+//   // Возвращаем общее количество файлов
+//   return _.sum(descendantCounts);
+// }
+
+// console.log(du(tree));
+
+
+// // Агрегация — JS: Деревья
+
+// import _ from 'lodash';
+// import {
+//   mkfile, mkdir, isDirectory, isFile, map, getChildren, getName, getMeta,
+// } from '@hexlet/immutable-fs-trees';
+
+// const tree = mkdir('/', [
+//   mkdir('etc', [
+//     mkdir('apache'),
+//     mkdir('nginx', [
+//       mkfile('.nginx.conf', { size: 800 }),
+//     ]),
+//     mkdir('.consul', [
+//       mkfile('.config.json', { size: 1200 }),
+//       mkfile('data', { size: 8200 }),
+//       mkfile('raft', { size: 80 }),
+//     ]),
+//   ]),
+//   mkfile('.hosts', { size: 3500 }),
+//   mkfile('resolve', { size: 1000 }),
+// ]);
+
+// function getHiddenFilesCount(tree) {
+//   if (isFile(tree)) {
+//     if (getName(tree)[0] === '.') {
+//     // Возвращаем 1 для учёта текущего файла
+//     // console.log(getName(tree)[0] === '.');
+//       return 1;// console.log(isFile(tree))
+//     }
+//     return 0;
+//   }
+
+//   // Если узел — директория, получаем его детей
+//   const children = getChildren(tree);
+//   // console.log(children);
+//   // Самая сложная часть
+//   // Считаем количество потомков для каждого из детей,
+//   // вызывая рекурсивно нашу функцию getNodesCount
+//   const descendantCounts = children.map(getHiddenFilesCount);
+//   // Возвращаем 1 (текущая директория) + общее количество потомков
+//   return _.sum(descendantCounts);
+// }
+
+// console.log(getHiddenFilesCount(tree));
+
+// // Обход дерева — JS: Деревья
+
+// import _ from 'lodash';
+// import {
+//   mkfile, mkdir, isDirectory, isFile, map, getChildren, getName, getMeta,
+// } from '@hexlet/immutable-fs-trees';
+
+// const tree = mkdir('/', [
+//   mkdir('eTc', [
+//     mkdir('NgiNx'),
+//     mkdir('CONSUL', [
+//       mkfile('config.JSON'),
+//     ]),
+//   ]),
+//   mkfile('hOsts'),
+// ]);
+
+// function downcaseFileNames (node) {
+//   let newMeta = _.cloneDeep(getMeta(node));
+//   let newName = getName(node);
+
+//   if (isFile(node)) {
+//     return mkfile(newName.toLowerCase(), newMeta);
+//   }
+  
+//   const children = getChildren(node);
+//   let newChildren = children.map(downcaseFileNames);
+
+//   return mkdir (newName, newChildren, newMeta);
+// }
+
+// // function downcaseFileNames (tree) {
+// //   const children = getChildren(tree);
+// //   const newChildren = children.map((child) => {
+// //     const name = getName(child);
+// //     const newMeta = _.cloneDeep(getMeta(child));
+// //     if (!isFile(child)) {
+// //       return mkdir(name, getChildren(child), newMeta);
+// //     }
+// //     console.log(name);
+// //     return mkfile(name.toLowerCase(), newMeta);
+// //   });
+// //   const newMeta = _.cloneDeep(getMeta(tree));
+// //   const tree2 = mkdir(getName(tree), newChildren, newMeta);
+// //   return tree2;
+// // }
+
+// console.log(tree);
+// console.log(downcaseFileNames(tree));
+
+// const result = downcaseFileNames(tree);
+// const result1 = getChildren(result);
+// console.log(result1[0]['children'][1]);
+
+// // Манипуляции с виртуальной файловой системой — JS: Деревья
+// import _ from 'lodash';
+// import {
+//   mkfile, mkdir, isDirectory, isFile, map, getChildren, getName, getMeta,
+// } from '@hexlet/immutable-fs-trees';
+
+// const tree = mkdir('my documents', [
+//   mkfile('avatar.jpg', { size: 100 }),
+//   mkfile('passport.jpg', { size: 200 }),
+//   mkfile('family.jpg', { size: 150 }),
+//   mkfile('addresses', { size: 125 }),
+//   mkdir('presentations'), { size: 123 },
+// ], { size: 321 }, );
+
+// function compressImages(obj) {
+//   const children = getChildren(tree);
+//   const newMeta = _.cloneDeep(getMeta(tree));
+//   const newChildren = children.map((child) => {
+//     const name = getName(child);
+//     const newMeta = _.cloneDeep(getMeta(child));
+//     if (!isFile(child) || !name.endsWith('.jpg')) {
+//       return child;
+//     }
+//     newMeta.size = newMeta.size / 2
+//     return mkfile(name, newMeta);
+
+//   });
+//   const tree2 = mkdir(getName(tree), newChildren, newMeta);
+//   return tree2;
+// }
+
+// console.log(tree);
+// console.log(compressImages(tree));
+
+// console.log(getChildren(tree));
+// console.log(getChildren(compressImages(tree)));
+
+// Виртуальная файловая система — JS: Деревья
+
+// const tree = mkdir('nodejs-package', [
+//   mkfile('Makefile'),
+//   mkfile('README.md'),
+//   mkdir('dist'),
+//   mkdir('__tests__', [
+//     mkfile('half.test.js', { type: 'text/javascript' }),
+//   ]),
+//   mkfile('babel.config.js', { type: 'text/javascript' }),
+//   mkdir(' node_modules', [
+//     mkdir('@babel', [
+//       mkdir('cli', [
+//         mkfile('LICENSE'),
+//       ]),
+//     ]),
+//   ], { owner: 'root', hidden: false }),
+// ], { hidden: true });
+
+
+// // Определения — JS: Деревья
+
+// function removeFirstLevel (tree) {
+//   const result = tree.filter(tree => Array.isArray(tree));
+//   return result.flat();
+// }
+
+// // const tree = [[5], 1, [3, 4]];
+// // [5, 3, 4]
+
+// // const tree = [1, 2, [3, 5], [[4, 3], 2]];
+// // [3, 5, [4, 3], 2]
+
+// // const tree = [];
+// // []
+
+// // const tree = [1, 100, 3];
+// // []
+
+// const tree = [[1, [3, 2]], 2, { a: 1 }, [3, 5], 2];
+// // [1, [3, 2], 3, 5]
+
+// console.log(removeFirstLevel(tree));
+
+
+// // Создание абстракции — JS: Абстракция с помощью данных
+
+// function makeSegment (point1, point2) {
+//   const segment = {};
+//   segment.point1 = point1;
+//   segment.point2 = point2;
+//   return segment;
+// }
+
+// function getMidpointOfSegment (line) {
+//   const midPoint = { x: (line.point1.x + line.point2.x) / 2, y: (line.point1.y + line.point2.y) / 2 };
+//   return midPoint;
+// }
+
+// function getBeginPoint (line) {
+//   return line.point1;
+// }
+
+// function getEndPoint (line) {
+//   return line.point2;
+// }
+
+
+// const makeDecartPoint = (x, y) => {
+//   const point = { x, y };
+//   return point;
+// };
+
+// const getX = (point) => point.x;
+// const getY = (point) => point.y;
+
+// const beginPoint = makeDecartPoint(3, 2);
+// const endPoint = makeDecartPoint(0, 0);
+
+// const segment = makeSegment(beginPoint, endPoint);
+
+// // console.log(makeSegment(beginPoint, endPoint));
+// // console.log(getMidpointOfSegment(segment));
+// console.log(getBeginPoint(segment)); // (3, 2)
+// console.log(getEndPoint(segment)); // (0, 0)
+
+
+// // Семантика массивов — JS: Абстракция с помощью данных
+
+// function getMidpoint (point1, point2) {
+//   const midPoint = { x: (point1.x + point2.x) / 2, y: (point1.y + point2.y) / 2 };
+//   return midPoint;
+// }
+
+// const point1 = { x: 0, y: 0 };
+// const point2 = { x: 4, y: 4 };
+// const point3 = getMidpoint(point1, point2);
+// console.log(point3); // => { x: 2, y: 2 };
+
+// // x = (x1 + x2) / 2 и y = (y1 + y2) / 2
+
+
+// import _ from 'lodash';
+
+// const functions = {
+//   right1: _.get,
+//   fail1: (obj = {}, key = null) => obj[key],
+//   fail2: (obj = {}, key = null, defaultValue = null) => defaultValue || obj[key],
+//   fail3: (obj = {}, key = null, defaultValue = null) => ((obj[key] && !defaultValue)
+//     ? null
+//     : _.get(obj, key, defaultValue)
+//   ),
+// };
+
+// if (capitalize({ hello: 'world' }, 'hello') !== 'world') {
+//   throw new Error('Функция работает неверно!');
+// }
+
+// if (capitalize({ hello: 'world' }, 'hello', 'kitty') !== 'kitty') {
+//   throw new Error('Функция работает неверно!');
+// }
+
+// if (capitalize({}, 'hello', 'kitty') !== 'kitty') {
+//   throw new Error('Функция работает неверно!');
+// }
+
+// if (capitalize('') !== '') {
+//   throw new Error('Функция работает неверно!');
+// }
+
+// const get = getFunction();
+
+
+// // Итеративный процесс — JS: Функции
+
+// const smallestDivisor = (num) => {
+//   if(num % 2 === 0) return 2;
+//   if(num === 1) return 1;
+ 
+//   const iter = (begin, acc) => {
+//     if(num % acc === 0) return acc;
+//     if(begin === num) return acc + num;
+ 
+//     return iter(begin + 1, acc + 1);
+//   }
+ 
+//   return iter(1, 2);
+// };
+
+// console.log(smallestDivisor(1));
+// // toBe(1);
+// // console.log(smallestDivisor(3));
+// // toBe(3);
+// // console.log(smallestDivisor(4));
+// // toBe(2);
+// // console.log(smallestDivisor(8));
+// // toBe(2);
+// // console.log(smallestDivisor(9));
+// // toBe(3);
+// // console.log(smallestDivisor(17));
+// // toBe(17);
+// // console.log(smallestDivisor(15));
+// // toBe(3);
+// // console.log(smallestDivisor(121));
+// // toBe(11);
+
+// // Рекурсия — JS: Функции
+
+// function sequenceSum (begin, end) {
+//   if (begin > end) return NaN;
+//   if (begin === end) return begin;
+//   let result = end + sequenceSum(begin, end - 1);
+//   return result;
+// }
+
+// console.log(sequenceSum(0, 0));
+// // toBe(0);
+// // console.log(sequenceSum(1, 1));
+// // toBe(1);
+// // console.log(sequenceSum(1, 5));
+// // toBe(15);
+// // console.log(sequenceSum(2, 6));
+// // toBe(20);
+// // console.log(sequenceSum(-1, -1));
+// // toBe(-1);
+// // console.log(sequenceSum(-5, 4));
+// // toBe(-5);
+
+
+// // Сигналы — JS: Функции
+
+// import _ from 'lodash';
+
+// const freeEmailDomains = [
+//   'gmail.com',
+//   'yandex.ru',
+//   'hotmail.com',
+//   'yahoo.com',
+// ];
+
+// const emails = [
+//     'info@gmail.com',
+//     'info@yandex.ru',
+//     'info@hotmail.com',
+//     'mk@host.com',
+//     'support@hexlet.io',
+//     'key@yandex.ru',
+//     'sergey@gmail.com',
+//     'vovan@gmail.com',
+//     'vovan@hotmail.com',
+// ];
+
+// function getFreeDomainsCount (object) {
+//   let result = {};
+//   object.map((email) => {
+//     const [, domain] = email.split('@');
+//     if (freeEmailDomains.includes(domain)) {
+//       result[domain] = _.get(result, domain, 0);
+//       result[domain] = result[domain] + 1;
+//     }
+//   })
+//   return result;
+// }
+ 
+// console.log(getFreeDomainsCount(emails));
+// // {
+// //   'gmail.com': 3,
+// //   'yandex.ru': 2,
+// //   'hotmail.com': 2,
+// // };
+
+// // Агрегация (reduce) — JS: Функции
+
+// import _ from 'lodash';
+
+// const students = [
+//   { name: 'Tirion', class: 'B', mark: 3 },
+//   { name: 'Keit', class: 'A', mark: 3 },
+//   { name: 'Ramsey', class: 'A', mark: 4 },
+// ];
+ 
+// const groupBy = (objects, key) => objects.reduce((acc, object) => {
+//   const groupName = object[key];
+//   const group = acc[groupName] ?? [];
+//   return { ...acc, [groupName]: group.concat(object) };
+// }, {});
+
+// // console.log(groupBy([], '')); // {}
+// console.log(groupBy(students, 'mark'));
+// // {
+// //   3: [
+// //     { name: "Tirion", class: "B", mark: 3 },
+// //     { name: "Keit", class: "A", mark: 3 },
+// //   ],
+// //   4: [
+// //     { name: "Ramsey", class: "A", mark: 4 },
+// //   ],
+// // }
+
+
+
+// Фильтрация (filter) — JS: Функции
+
+// const users = [
+//   {
+//     name: 'Tirion',
+//     friends: [
+//       { name: 'Mira', gender: 'female' },
+//       { name: 'Ramsey', gender: 'male' },
+//     ],
+//   },
+//   { name: 'Bronn', friends: [] },
+//   {
+//     name: 'Sam',
+//     friends: [
+//       { name: 'Aria', gender: 'female' },
+//       { name: 'Keit', gender: 'female' },
+//     ],
+//   },
+//   {
+//     name: 'Rob',
+//     friends: [
+//       { name: 'Taywin', gender: 'male' },
+//     ],
+//   },
+// ];
+
+// function getGirlFriends (arr) {
+//   const names = arr.map((arr) => arr.friends);
+//   const namesFlat = names.flat(1);
+//   const filteredNames = namesFlat.filter((namesFlat) => namesFlat.gender === 'female');
+//   return filteredNames;
+// }
+ 
+// console.log(getGirlFriends(users));
+// [
+//   { name: 'Mira', gender: 'female' },
+//   { name: 'Aria', gender: 'female' },
+//   { name: 'Keit', gender: 'female' },
+// ];
+
+// // Отображение (map) — JS: Функции
+
+// const users = [
+//   {
+//     name: 'Tirion',
+//     children: [
+//       { name: 'Mira', birthday: '1983-03-23' },
+//     ],
+//   },
+//   { name: 'Bronn', children: [] },
+//   {
+//     name: 'Sam',
+//     children: [
+//       { name: 'Aria', birthday: '2012-11-03' },
+//       { name: 'Keit', birthday: '1933-05-14' },
+//     ],
+//   },
+//   {
+//     name: 'Rob',
+//     children: [
+//       { name: 'Tisha', birthday: '2012-11-03' },
+//     ],
+//   },
+// ];
+
+// function getChildren (arr) {
+//   const names = users.map((arr) => arr.children);
+//   return names.flat(1);
+//   // return arr.flat(1);
+// }
+
+// console.log(getChildren(users));
+// // [
+// //   { name: 'Mira', birthday: '1983-03-23' },
+// //   { name: 'Aria', birthday: '2012-11-03' },
+// //   { name: 'Keit', birthday: '1933-05-14' },
+// //   { name: 'Tisha', birthday: '2012-11-03' },
+// // ];
+
+
+
+// // Функции высшего порядка — JS: Функции
+
+// import _ from 'lodash';
+
+// const users = [
+//   { name: 'Tirion', birthday: 'Nov 19, 1988' },
+//   { name: 'Sam', birthday: 'Nov 22, 1999' },
+//   { name: 'Rob', birthday: 'Jan 11, 1975' },
+//   { name: 'Sansa', birthday: 'Mar 20, 2001' },
+//   { name: 'Tisha', birthday: 'Feb 27, 1992' },
+//   { name: 'Chris', birthday: 'Dec 25, 1995' },
+// ];
+
+// // function takeOldest (usersList, quantity = 1) {
+// //   for(let objElement of usersList) {
+// //     objElement.birthday = new Date(objElement.birthday);
+// //   }
+// //   const resultSort = (_.sortBy(usersList, ['birthday']));
+// //   const resultQuan = resultSort.slice(0, quantity);
+// //   for(let objElement of resultQuan) {
+// //     objElement.birthday = objElement.birthday.toDateString().slice(4, objElement.birthday.length);
+// //     objElement.birthday = objElement.birthday.slice(0, 6)+','+objElement.birthday.slice(6, objElement.birthday.length);
+// //   }
+// //   return resultQuan;
+// // }
+
+// const takeOldest = (users, count = 1) => {
+//   const sorted = _.sortBy(users, ({ birthday }) => Date.parse(birthday));
+//   return sorted.slice(0, count);
+// };
+
+// console.log(takeOldest(users, 6));
+// // [
+// //   { name: 'Rob', birthday: 'Jan 11, 1975' },
+// // ];
+
+
+
+// Объекты первого класса — JS: Функции
+
+// run('');       // null
+// run('cb');     // null
+// run('power');  // rewo
+// run('hexlet'); // telx
+
+// const run = (text) => {
+//   // BEGIN (write your solution here)
+//   const takeLast = (textLast, sumbol) => {
+//     let i = textLast.length;
+//     let result = '';
+//     while (i > (textLast.length-sumbol)) {
+//       i = i - 1;
+//       result = `${result}${textLast[i]}`;
+//     }
+//     if (text === '' || textLast.length < sumbol) {
+//       result = null;
+//     }
+//     return result;
+//   }
+//   // END
+
+//   return takeLast(text, 4);
+// };
+
+// console.log(run('ew'));
+
+
+// // Оператор Spread (распаковка аргументов) — JS: Функции
+
+// // const test = [
+// //   [1982, 12, 11],
+// //   [1996, 5, 28],
+// //   [2005, 1, 1],
+// //   [2000, 12, 12],
+// //   [1994, 7, 31],
+// // ];
+
+// function convert (...data) {
+//   let result = [];
+//   for (const date of data) {
+//     const dataStr = date.join(', ');
+//     const dataArr = dataStr.split(', ');
+//     let dataUpdate = Number((dataArr)[1])+1;
+//     let yaer = Number((dataArr)[0]);
+//     if (dataUpdate > 12) {
+//       dataUpdate = dataUpdate - 12;
+//       yaer = yaer + 1     
+//     }
+//     console.log(dataUpdate);
+//     dataArr.splice(1, 1, String(dataUpdate));
+//     dataArr.splice(0, 1, String(yaer));
+//     const dataFix = new Date(dataArr);
+//     const dataText = dataFix.toDateString();
+//     result.push(dataText);
+//   }
+//   return result;
+// }
+
+// console.log(convert(test));
+
+// convert();
+// []
+ 
+// convert([1993, 3, 24]);
+// ['Sat Apr 24 1993']
+ 
+// console.log(convert([1993, 12, 24], [1997, 8, 12], [2001, 10, 18]));
+// ['Sat Apr 24 1993', 'Fri Sep 12 1997', 'Sun Nov 18 2001']
+
+
+// // Оператор Rest (упаковка аргументов) — JS: Функции
+
+// import _ from 'lodash';
+
+// function average (...numberArr) {
+//   let result = ''
+//   if (numberArr[0] === undefined) {
+//     result = null;
+//   } else {
+//     const sumArr = _.sum(numberArr);
+//     result = sumArr/numberArr.length;
+//   }
+//   return result;
+// }
+
+// // console.log(average(0)); // 0
+// // console.log(average(0, 10)); // 5
+// // console.log(average(-3, 4, 2, 10)); // 3.25
+// console.log(average()); // null
+
+
+// Хеш-таблицы — JS: Объекты
+
+// import { bstr, buf, str } from "crc-32";
+
+// // const data = 'Hello, world!'; // Любые данные, которые мы хотим хешировать
+// // const hash = str(data);
+
+// // // Хеш всегда одинаковый для одних и тех же данных!
+// // console.log(hash); // => -337197338
+
+// function make() {
+//   const dictionary = [];
+//   return dictionary;
+// }
+
+// let map = make();
+
+// function set(arr, key, value) {
+//   const hash = crc32.str(key);
+//   const index = Math.abs(hash) % 1000;
+//   arr[index] = value;
+//   if (map[index] === value || map[index] === undefined) {
+//     map = arr.slice(0);
+//   } else {
+//     console.log('не изменили на', value);
+//     console.log(map[index]);
+//     return false;
+//   }
+//   return true;
+// }
+
+// function get(arr, key, defaultValue = null) {
+//   console.log(map);
+//   console.log(arr);
+//   let result = '';
+//   const hash = crc32.str(key);
+//   const index = Math.abs(hash) % 1000;
+//   const value = arr[index];
+//   if (value === undefined) {
+//     result = defaultValue;
+//   } else {
+//     result = value;
+//   }
+//   return result;
+// }
+
+// let result = get(map, 'key');
+// console.log(result); // => null
+
+// result = get(map, 'key', 'default_value');
+// console.log(result); // => "default_value"
+
+// console.log(set(map, 'key2', 'value2'));
+// console.log(get(map, 'key2')); // => "value2"
+
+
+
+// // Деструктуризация — JS: Объекты
+
+// const users = [
+//   { name: 'Bronn', gender: 'male', birthday: '1973-03-23' },
+//   { name: 'Reigar', gender: 'male', birthday: '1973-11-03' },
+//   { name: 'Eiegon', gender: 'male', birthday: '1963-11-03' },
+//   { name: 'Sansa', gender: 'female', birthday: '2012-11-03' },
+// ];
+ 
+// // getSortedNames(users); // ['Bronn', 'Eiegon', 'Reigar', 'Sansa']
+
+// function getSortedNames (arr) {
+//   const result = []; 
+//   for (const arrObj of arr) {
+//     const { name } = arrObj;
+//     result.push(name);
+//   } 
+//   return result.sort();
+// }
+
+// console.log(getSortedNames(users));
+
+
+
+// // spread и создание новых объектов — JS: Объекты
+
+// function make (companyName, additionalProperties = '') {
+//   const newObj = {name: companyName, ...additionalProperties,};
+//   const arrKey = Object.keys(additionalProperties);
+//   const stateDate = {};
+//   if (!arrKey.includes('state')) {
+//     stateDate.state = 'moderating';
+//   }
+//   if (!arrKey.includes('createdAt')) {
+//     stateDate.createdAt = Date.now();
+//   }
+//   const newObj1 = { ...newObj, ...stateDate };
+//   return newObj1;
+// }
+
+// // console.log(make('Hexlet', { website: 'hexlet.io', state: 'published' }));
+// console.log(make('Hexlet'));
+
+// Клонирование (копирование) — JS: Объекты
+
+// const data = {
+//   key: 'value',
+//   key2: {
+//     key: 'innerValue',
+//     innerKey: {
+//       anotherKey: 'anotherValue',
+//     },
+//   },
+// };
+
+// function cloneShallow (obj) {
+//   if (obj === null) return null;
+//   let clone = Object.assign({}, obj);
+//   Object.keys(clone).forEach(
+//     key =>
+//       (clone[key] =
+//         typeof obj[key] === "object" ? cloneShallow(obj[key]) : obj[key])
+//   );
+//   return Array.isArray(obj) && obj.length
+//     ? (clone.length = obj.length) && Array.from(clone)
+//     : Array.isArray(obj)
+//     ? Array.from(obj)
+//     : clone;
+// }
+
+// console.log(cloneShallow(data));
+
+// // Слияние — JS: Объекты
+// import _ from 'lodash';
+
+// const company = {
+//   name: null,
+//   state: 'moderating',
+// };
+ 
+// const data = {
+//   name: 'Hexlet',
+//   state: 'published',
+// };
+
+// // const object = {
+// //   key: 'value',
+// //   key2: 'value2',
+// // };
+
+// // const data = {
+// //   key2: 'value3',
+// //   key3: 'val',
+// //   key4: 'boom!',
+// //   key: 'another value',
+// // };
+
+// function fill (obj, keyList, dataObj) {
+//   const objData = _.pick(dataObj, keyList);
+//   if (keyList[0] === undefined) {
+//     const result = Object.assign(obj, dataObj);
+//     return result;
+//   } else {
+//     const result = Object.assign(obj, objData);
+//     return result;
+//   }
+// }
+
+// // console.log(fill(object, ['key', 'key2', 'key10'], data));
+//   // key: 'another value',
+//   // key2: 'value3',
+
+// console.log(fill(company, ['name'], data));
+// // {
+// //   name: 'Hexlet',
+// //   state: 'moderating',
+// // }
+ 
+// // console.log(fill(company, [], data));
+// // {
+// //   name: 'Hexlet',
+// //   state: 'published',
+// // }
+
+
+// // Вложенные объекты — JS: Объекты
+
+// const data = {
+//   user: 'ubuntu',
+//   hosts: {
+//     0: {
+//       name: 'web1',
+//     },
+//     1: {
+//       name: 'web2',
+//       null: 3,
+//       active: false,
+//     },
+//   },
+// };
+ 
+// function get (obj, key) {
+//   let result = '';
+//   for (const elementKey of key) {
+//     if (Object.hasOwn(obj, elementKey)) {
+//       obj = obj[elementKey];
+//       result = obj;
+//     } else {
+//       return null;
+//     }
+//   }
+//   return result;
+// }
+
+// // console.log(get(data, ['undefined'])); // null
+// // console.log(get(data, ['user'])); // 'ubuntu'
+// // console.log(get(data, ['user', 'ubuntu'])); // null
+// // console.log(get(data, ['hosts', 1, 'name'])); // 'web2'
+// // console.log(get(data, ['hosts', 0])); // { name: 'web1' }
+// // console.log(get(data, ['hosts', 1, null])); // 3
+// console.log(get(data, ['hosts', 1, 'active'])); // false
+
+
+
+// // Обход свойств объекта — JS: Объекты
+
+// const data = {
+//   user: 'ubuntu',
+//   cores: 4,
+//   os: 'linux',
+// };
+
+// function pick (objData, objKey) {
+//   const result = {};
+
+//   const entries = Object.entries(objData);
+//   // console.log(entries);
+//   for (const elementObjKey of objKey) {
+//     // console.log(elementObjKey);
+//     for (const [key, value] of entries) {
+//       // console.log(key);
+//       // console.log(elementObjKey);
+//       if (key === elementObjKey) {
+//         result[key] = value;
+//       }
+//     }
+//   }
+//   return result;
+
+// }
+
+// console.log(pick(data, ['user', 'user1'])); // { user: 'ubuntu' }
+// console.log(pick(data, ['user', 'os'])); // { user: 'ubuntu', os: 'linux' }
+// console.log(pick(data, [])); // {}
+// // Если такого свойства нет в исходных данных,
+// // то оно игнорируется 
+// console.log(pick(data, ['none', 'cores'])); // { cores: 4 }
+
+
+
+// // Проверка существования свойства — JS: Объекты
+
+// import _ from 'lodash'
+
+// // Если предложение пустое, то возвращается пустой объект 
+// // countWords('');
+// // {}
+ 
+// const text1 = 'one two three two ONE one wow';
+// // {
+// //   one: 3,
+// //   two: 2,
+// //   three: 1,
+// //   wow: 1,
+// // }
+ 
+// const text2 = 'another one sentence with strange Words words';
+// // {
+// //   another: 1,
+// //   one: 1,
+// //   sentence: 1,
+// //   with: 1,
+// //   strange: 1,
+// //   words: 2,
+// // }
+
+// function countWords (text) {
+//   const lower = text.toLowerCase();
+//   const lowerArray = _.words(lower);
+//   const result = {};
+//   for (const word of lowerArray) {
+//     if (Object.hasOwn(result, word)) {
+//       result[word] += 1;
+//     } else {
+//       result[word] = 1;
+//     }
+//   }
+
+//   return result;
+// }
+
+// console.log(countWords(''));
+
+
+
+// Объекты в действии — JS: Объекты
+
+// import _ from 'lodash'
+
+// // const testUrl = 'yandex.ru';
+// const testUrl = 'https://hexlet.io';
+// // const testUrl = 'http://google.com';
+
+// function getDomainInfo (myUrl) {
+//   const arrayUrl = myUrl.split('/');
+//   const lastArray = _.last(arrayUrl);
+//   const result = {
+//     scheme: 'http',
+//     name: lastArray,
+//   }
+//   if ((arrayUrl[0] === 'https:') || (arrayUrl[0] === 'http:')) {
+//     result.scheme = arrayUrl[0].slice(0, arrayUrl[0].length - 1);
+//   }
+//   return result;
+// } 
+
+// console.log(getDomainInfo(testUrl));
+// Ссылки — JS: Объекты
+
+// const company1 = { name: 'Hexlet', state: 'moderating', website: 'https://hexlet.io' };
+// const company2 = { name: 'CodeBasics', state: 'published', website: 'https://code-basics.com' };
+// is(company1, company2); // false
+ 
+// const company1 = { name: 'Hexlet', state: 'published', website: 'https://hexlet.io' };
+// const company2 = { name: 'Hexlet', state: 'published', website: 'https://hexlet.io' };
+// is(company1, company2); // true
+
+// const company1 = { name: 'Hexlet', state: 'published', website: 'https://hexlet.io' };
+// const company2 = { name: 'Hexlet', state: 'published', website: 'https://code-basics.com' };
+
+// function is(obj1, obj2) {
+//   let obj1_1 = obj1.name;
+//   // console.log(obj1_1);
+//   let obj1_2 = obj1.state;
+//   let obj1_3 = obj1.website;
+//   let obj2_1 = obj2.name;
+//   let obj2_2 = obj2.state;
+//   let obj2_3 = obj2.website;
+//   let result = obj1_1 === obj2_1 && obj1_2 === obj2_2 && obj1_3 === obj2_3;
+//   return result   
+// }
+
+// console.log(is(company1, company2));
+
+// export default is;
+
+// Модификация — JS: Объекты
+
+// import _ from 'lodash';
+
+// const lesson = {
+//   name: 'ДеструКТУРИЗАЦИЯ',
+//   description: 'каК удивитЬ друзей',
+// };
+
+// function normalize (obj) {
+//   lesson.name = _.capitalize(obj.name);
+//   lesson.description = obj.description.toLowerCase()
+//   return obj;
+// }
+
+// console.log(normalize(lesson));
+
+// // #!/usr/bin/env node
+// console.log('123');
+
+
+// const openingSymbols = ['(', '[', '{', '<'];
+// const closingSymbols = [')', ']', '}', '>'];
+
+// // BEGIN
+// const isOpeningSymbol = (symbol) => openingSymbols.includes(symbol);
+// const getClosingSymbolFor = (symbol) => {
+//   for (let i = 0; i < closingSymbols.length; i += 1) {
+//     if (openingSymbols[i] === symbol) {
+//       return closingSymbols[i];
+//     }
+//   }
+//   return null;
+// };
+
+// export default (str) => {
+//   const stack = [];
+//   for (const symbol of str) {
+//     if (isOpeningSymbol(symbol)) {
+//       const closingSymbol = getClosingSymbolFor(symbol);
+//       stack.push(closingSymbol);
+//     } else {
+//       const lastSavedSymbol = stack.pop();
+//       if (symbol !== lastSavedSymbol) {
+//         return false;
+//       }
+//     }
+//   }
+
+//   return stack.length === 0;
+// };
+
+
+// function isBracketStructureBalanced(s) {
+//   let stack = [];
+//   let brackets = {
+//     ')':'(',
+//     '}':'{',
+//     ']':'[',
+//     '>':'<'
+//   }
+
+//   for (var i = 0; i < s.length; i++) {
+//     const current = s[i];
+    
+//     if(icClosedBracket(current)) {
+//       if(brackets[current] !== stack.pop()) return false;
+//     } else {
+//       stack.push(current);
+//     };
+//   };
+  
+//   return stack.length === 0;
+// };
+
+// function icClosedBracket (ch) {
+//   return [')','}',']','>'].indexOf(ch) > -1;
+// }
+//   // пары открывающих-закрывающих скобок
+//   var br = "(){}[]";
+//   // стек открытых скобок
+//   var st = [];
+//   // бежим по всей строке
+//   for (var i = 0; i < str.length; ++i) {
+//       // текущий символ
+//       var ch = str[i];
+//       // ищем символ в скобках
+//       var ind = br.indexOf(ch);
+//       // если скобка найдена
+//       if (ind >= 0) {
+//           // проверяем, какая это скобка
+//           if (ind & 1) {
+//               // если закрывающая скобка, проверяем стек
+//               // стек пуст - плохо
+//               if (!st.length) return false;
+//               // извлекаем последнюю открытую скобку из стека
+//               var last_br = st.pop();
+//               // если она не соответствует закрывающей скобке - тоже плохо
+//               if (last_br != br[ind - 1]) return false;
+//           } else { 
+//               // открывающую скобку просто пихаем в стек
+//               st.push(ch);
+//           }
+//       }
+//   }
+//   // если после обхода всей строки стек пуст - всё ок
+//   return !st.length;
+// }
+
+// const isBracketStructureBalanced  = function(str) {
+//   let chars = str.split(''),
+//       stack = [],
+//       open = ['{', '(', '['],
+//       close = ['}', ')', ']'],
+//       closeIndex,
+//       openIndex;
+
+//   for (var i = 0, len = chars.length; i < len; i++) {
+//      openIndex = open.indexOf(chars[i]);
+//      if (openIndex !== -1) {
+//          stack.push(openIndex);
+//          continue;
+//      }
+
+//      closeIndex = close.indexOf(chars[i]);
+//      if (closeIndex !== -1) {
+//          openIndex = stack.pop();
+//          if (closeIndex !== openIndex) {
+//              return false;
+//          }
+//      }
+//   }
+
+//   if (stack.length !== 0) {
+//       return false;
+//   }
+
+//   return true;
+// }
+
+// console.log(isBracketStructureBalanced ('(<><<{[()]}>>>)'));
+
+// const openingSymbols = ['(', '[', '{', '<'];
+// const closingSymbols = [')', ']', '}', '>'];
+
+// const str = '()'; // true
+// const str2 = '[()]'; // true
+// const str3 = '({}[])'; // true
+// const str4 = '(<><<{[()]}>>>)'; // false
+// const str5 = '}'; // false
+// const str6 = '([)]'; // false
+
+// const isBracketStructureBalanced = (expression) => {
+//   const stack = [];
+//   let openIndex;
+//   let closeIndex;
+//   for (const symbol of expression) {
+//     openIndex = openingSymbols.indexOf(symbol);
+//     if (openIndex !== -1) {
+//       stack.push(symbol);
+//       continue;
+//     }
+//     closeIndex = closingSymbols.indexOf(symbol);
+//     if (closeIndex !== -1) {
+//       openIndex = stack.pop();
+//       if (closeIndex !== openIndex) {
+//         return false;
+//       };
+//     };
+//   };
+//   if (stack.length !== 0) {
+//     return false;
+//   };
+//   return true;
+
+
+  // Инициализация стека
+  //   const stack = [];
+  //   let temp1;
+  //   let temp2;
+  //   // Проходим по каждому символу в строке
+  //   for (const symbol of expression) {
+  //     // console.log(stack);
+  //     console.log(symbol);
+  //     temp1 = openingSymbols.indexOf(symbol);
+  //     temp2 = closingSymbols.indexOf(symbol);
+  //     // console.log(temp1, temp2);
+  //     // console.log(openingSymbols[temp1], closingSymbols[temp2]);
+  //     // Смотрим открывающий или закрывающий
+  //     // if (symbol === '(') {
+  //     if (expression.length > 1) {
+  //       console.log(closingSymbols[temp1] === !stack.pop());
+  //       if (symbol === openingSymbols[openingSymbols.indexOf(symbol)]) {
+  //     // if (symbol === '(' || symbol === '[' || symbol === '{' || symbol === '<') {
+  //         stack.push(symbol);
+  //         console.log(stack);
+  //       // } else if (symbol === ')') {
+  //       // } else if (symbol === openingSymbols[temp1] || closingSymbols[temp2]) {
+  //       // } else if (symbol === closingSymbols[temp2]) {
+  //       } else if (closingSymbols[temp1] === !stack.pop()) {
+  //         console.log('else if')
+  //         console.log(temp1, temp2);
+  //         console.log(openingSymbols[temp1]);
+  //     // } else if (symbol === ')' || symbol === ']' || symbol === '}' || symbol === '>') {
+  //         // Если для закрывающего не нашлось открывающего, значит баланса нет
+  //         console.log(stack);
+  //         // console.log(!stack.pop(), 'до if');
+  //         // if (!stack.pop()) {
+  //         if (openingSymbols[temp2] || openingSymbols[temp1] === stack[stack.length - 1]) {
+  //           // !stack.pop()
+  //           console.log(!stack.pop(), 'if');
+  //           // return !stack.pop();
+  //         };
+  //         return  false;
+  //       };
+  //       // console.log(stack);
+  //     } else {
+  //     return  false;
+  //     };
+  //   };
+  
+  //   return stack.length === 0;
+// };
+
+// console.log(isBracketStructureBalanced(str));
+
+
+// const bubbleSort = (coll) => {
+//     let stepsCount = coll.length - 1;
+//     // Объявляем переменную swapped, значение которой показывает,
+//     // был ли совершен обмен элементов во время перебора массива
+//     let swapped;
+//     // do..while цикл. Работает почти идентично while
+//     // Разница в проверке. Тут она делается не до выполнения тела, а после.
+//     // Такой цикл полезен там, где надо выполнить тело хотя бы раз в любом случае.
+//     do {
+//       swapped = false;
+//       // Перебираем массив и меняем местами элементы, если предыдущий
+//       // больше, чем следующий
+//       for (let i = 0; i < stepsCount; i ++) {
+//         if (coll[i] > coll[i + 1]) {
+//           // temp – временная константа для хранения текущего элемента
+//           const temp = coll[i];
+//           coll[i] = coll[i + 1];
+//           coll[i + 1] = temp;
+//           // Если сработал if и была совершена перестановка,
+//           // присваиваем swapped значение true
+//           swapped = true;
+//         }
+//       }
+//       // Уменьшаем счетчик на 1, т.к. самый большой элемент уже находится
+//       // в конце массива
+//       stepsCount --;
+//     } while (swapped); // продолжаем, пока swapped === true
+  
+//     return coll;
+//   };
+  
+// console.log(bubbleSort([3, 2, 10, -2, 0])); // => [ -2, 0, 2, 3, 10 ]
+
+
+// const text1 = 'yyab'; // y, a, b
+// // countUniqChars(text1); // 3
+ 
+// const text2 = 'You know nothing Jon Snow';
+// // countUniqChars(text2); // 13
+ 
+// // // Если передана пустая строка, то функция должна вернуть `0`
+// const text3 = '';
+// // countUniqChars(text3); // 0
+// import _ from 'lodash';
+// function countUniqChars (text) {
+//     const separator = '';
+//     const wordsText = _.uniq(text.split(separator));
+//     return wordsText.length;
+// }
+// console.log(countUniqChars(text3));
+
+// import _ from 'lodash';
+
+// function getSameCount (arrayOne, arrayTwo) {
+//     let arrayOneUnique = _.uniq(arrayOne);
+//     let arrayTwoUnique = _.uniq(arrayTwo);
+//     let result = 0;
+//     for (const check of arrayTwoUnique) {
+//         // console.log(check);
+//         if (arrayOneUnique.includes(check)) {
+//             result = result + 1;
+//         };
+//     } return result;
+//     const result = [];
+//     for (item of array) {
+//         if (Array.isArray(item)) {
+//             for (subItem of item) {
+//             result.push(subItem);
+//             }
+//         } else {
+//             result.push(item);
+//         }
+//     }
+//     return _.uniq(result);    
+// }
+
+// console.log(getSameCount([1, 3, 2, 2], [3, 1, 1, 2, 5]));
+// console.log(getSameCount([1, 4, 4], [4, 8, 4]));
+// console.log(getSameCount([1, 10, 3], [10, 100, 35, 1]));
+// console.log(getSameCount([], []));
+
+// const sentence = 'When you play the game of thrones, you win or you die';
+
+// function makeCensored (text, stopWord) {
+//     const separator = ' ';
+//     const wordsText = text.split(separator);
+//     let replacementResult = [];
+//     for (const word of wordsText) {
+//         let replacement = (stopWord.includes(word) ? `$#%!` : word);
+//         replacementResult.push(replacement);
+//     };
+//     return replacementResult.join(separator);
+// }
+
+// console.log(makeCensored(sentence, ['die', 'play']));
+// console.log(makeCensored(sentence));
+
+// const definitions = [];
+
+// const definitions = [
+//     ['Блямба', 'Выпуклость, утолщения на поверхности чего-либо'],
+//     ['Бобр', 'Животное из отряда грызунов'],
+//   ];
+// '<dl><dt>Блямба</dt><dd>Выпуклость, утолщение на поверхности чего-либо</dd><dt>Бобр</dt><dd>Животное из отряда грызунов</dd></dl>';
+
+// const buildDefinitionList = (definitions) => {
+//     if (definitions.length === 0) {
+//       return '';
+//     }
+  
+//     const parts = [];
+  
+//     for (const definition of definitions) {
+//       const name = definition[0];
+//       const description = definition[1];
+//       parts.push(`<dt>${name}</dt><dd>${description}</dd>`);
+//     }
+  
+//     const innerValue = parts.join('');
+//     const result = `<dl>${innerValue}</dl>`;
+  
+//     return result;
+//   };
+
+// function buildDefinitionList (coll) {
+//     console.log(coll[0]);
+//     if (coll[0] === undefined) {
+//         let result = ``;
+//         return result;
+//     } else {
+//         const parts = [];
+//         const parts_1 = [];
+//         const parts_2 = [];
+//         let item = coll[0][0];
+//         let item_1 = coll [0][1];
+//         parts_1.push(`<dt>${item}</dt><dd>${item_1}</dd>`);
+//         let item_2 = coll[1][0];
+//         let item_3 = coll [1][1];
+//         parts_2.push(`<dt>${item_2}</dt><dd>${item_3}</dd>`);
+//         parts.push(parts_1 + parts_2);
+//         const innerValue = parts.join('');
+//         const result = `<dl>${innerValue}</dl>`;
+//         return result;
+//     };
+// };
+
+// console.log(buildDefinitionList(definitions));
+
+// // const scores = [
+// //     [3, 7], // Первая игра
+// //     [4, 1], // Вторая игра
+// //     [4, 4],
+// //     [3, 5],
+// //     [4, 5],
+// //     [3, 2],
+// //     [4, 3],
+// //     [6, 5],
+// //   ];
+
+// const scores =[
+//     [3, 2],
+//     [4, 1],
+//     [5, 8],
+//     [5, 5],
+//     [2, 2],
+//     [2, 4],
+//     [4, 2],
+//     [2, 4],
+//   ];
+
+// function getSuperSeriesWinner(array) {
+//     let result = [];
+//     for (let i = 0; i < array.length; i = i + 1) {
+//         if (array[i][0] > array[i][1]) {
+//             result.push(`canada`);
+//         } else if (array[i][0] < array[i][1]){
+//             result.push(`ussr`);
+//         }
+//     }
+//     let score = [0, 0];
+//     for (let i = 0; i < result.length; i = i + 1) {
+//         switch (result[i]) {
+//             case `canada`:
+//             score[0] = score[0] + 1;
+//             break;
+//             default:
+//             score[1] = score[1] + 1;
+//         }
+//     }
+//     let winner;
+//     if (score[0] > score[1]) {
+//         winner = `canada`;
+//     } else if (score[0] < score[1]) {
+//         winner = `ussr`;
+//     } else {
+//         winner = null;
+//     }        
+//     return winner;
+// }
+// console.log(getSuperSeriesWinner(scores));
+
+
+
+// const money1 = [
+//     'eur 10', 'usd 1', 'usd 10', 'rub 50', 'usd 5',
+//   ];
+// const money2 = [
+//     'eur 10', 'usd 1', 'eur 5', 'rub 100', 'eur 20', 'eur 100', 'rub 200',
+//   ];
+// const money3 = [
+//     'eur 10', 'rub 50', 'eur 5', 'rub 10', 'rub 10', 'eur 100', 'rub 200',
+//   ]; 
+
+// function getTotalAmount(array, currency) {
+//     let resultСurrency = [];
+//     // if (array[0] % 2 === 0) {
+//     for (let i = 0; i < array.length; i = i + 1) {
+//         if (array[i][0] !== currency[0]) continue;
+//         resultСurrency.push(array[i]);
+//         }
+//         console.log(resultСurrency);
+//         let resultMoney = [];
+//         for (let i = 0; i < resultСurrency.length; i = i + 1) {
+//             // if (result_1[i][0] !== currency[0]) continue;
+//             resultMoney.push(Number(resultСurrency[i].slice(4)));
+//         }
+//         let resultSumMoney = resultMoney.reduce(function(sum, elem) {
+//             return sum + elem;
+//         }, 0);
+//         return resultSumMoney;
+//     }
+
+
+
+//         return result;
+//     } else {
+//         for (let i = 0; i < array.length; i = i + 1) {
+//             if (array[i] % 2 !== 0) {
+//                 result.push(array[i]);
+//             }
+//         }
+//         return result;
+//     }
+// }
+// console.log(getTotalAmount(money1, `usd`));
+
+
+
+// function getSameParity(array) {
+//     let result = [];
+//     if (array[0] % 2 === 0) {
+//         for (let i = 0; i < array.length; i = i + 1) {
+//             if ((array[i] % 2) === 0) {
+//                 result.push(array[i]);
+//             }
+//         }
+//         return result;
+//     } else {
+//         for (let i = 0; i < array.length; i = i + 1) {
+//             if (array[i] % 2 !== 0) {
+//                 result.push(array[i]);
+//             }
+//         }
+//         return result;
+//     }
+// }
+// console.log(getSameParity([2, 2, 8])); // [1, 3]
+
+
+
+// const temperatures1 = [37.5, 34, 39.3, 40, 38.7, 41.5];
+// // const temperatures1 = [];
+
+// function calculateAverage(array) {
+//     let sum = 0;
+//     for (let i = 0; i < array.length; i = i + 1) {
+//         sum = sum + array[i];
+//         // console.log(array);
+//     } if (sum !== 0) {
+//         // console.log(array);
+//         return sum / array.length;
+//     } else {
+//         return null;
+//     }
+// }
+
+// console.log(calculateAverage(temperatures1)); // 38.5
+
+
+
+// const coll1 = [];
+
+// function calculateSum(array) {
+//     let sum = 0;
+//     for (let i = 0; i < array.length; i = i + 1) {
+//         if ((array[i] % 3) === 0) {
+//             sum = sum + array[i];
+//         }
+//     }
+//   return sum;
+// }
+
+// console.log(calculateSum(coll1));
+
+
+
+// // const names = ['john', 'smith', 'karl'];
+// const names = ['john', 'smith', 'karl', 'alan', 'joe'];
+
+
+// function myReverse(array) {
+//   for (let i = 0; i < (array.length / 2); i = i + 1) {
+//     // console.log(i);
+//     console.log(names);
+//     // console.log(array.length);
+//     let temp = array[i];
+//     array[i] = array[array.length - (1 + i)];
+//     array[array.length - (1 + i)] = temp;
+//     // console.log(array[i]);
+//     // return array;
+//   }
+//   // console.log(array);
+//   return array;
+// }
+// myReverse(names);
+
+// console.log(names);
+
+
+// function extract (array, indexArray, param = 'null') {
+//     let result
+//     console.log(array);
+//     console.log(indexArray);
+//     console.log(array.length);
+//     console.log(array[indexArray]);
+//     if (indexArray < array.length || indexArray >= 0 || array[indexArray] !== undefined) {
+//       result = array[indexArray];
+//     } else if (array[indexArray] === undefined) {
+//       array[indexArray] = false;
+//     } else {
+//       result = param;
+//     };
+//     return result;
+//   }
+  
+//   export default extract
+  
+
+
+//   function extract (array, indexArray, param = 'null') {
+//     let result;
+//     // array[array.indexOf('undefined')] = 'false'
+//     // array[7] = 'false'
+//     console.log(array);
+//     console.log(indexArray);
+//     console.log(array.length);
+//     console.log(array[indexArray]);
+//     // console.log([array.indexOf('undefined')]);
+//     if (indexArray < array.length || indexArray >= 0) {
+//       result = array[indexArray];
+//     } else if (array[indexArray] === undefined) {
+//       result = 'false';
+//     } else {
+//       result = param;
+//     };
+//     return result;
+//   }
+  
+//   export default extract
+
+  
+
+//   function extract (array, indexArray, param = null) {
+//     let result;
+//     // array[array.indexOf('undefined')] = 'false'
+//     // array[7] = 'false'
+//     console.log(array);
+//     console.log(indexArray);
+//     console.log(array.length);
+//     console.log(array[indexArray]);
+//     // console.log([array.indexOf('undefined')]);
+//     if (array[indexArray] === undefined && indexArray > 0 && indexArray < array.length) {
+//       result = false;
+//     } else if (indexArray < array.length && indexArray >= 0 && indexArray < array.length) {
+//       result = array[indexArray];
+//     } else {
+//       result = param;
+//     }
+//     return result;
+//   }
+  
+//   export default extract;
+  
+
+
+//   function extract (array, indexArray, param = null) {
+//     let result;
+//     // array[array.indexOf('undefined')] = 'false'
+//     // array[7] = 'false'
+//     console.log(array);
+//     console.log(indexArray);
+//     console.log(array.length);
+//     console.log(array[indexArray]);
+//     // console.log(typeof array[5]);
+//     // console.log([array.indexOf('undefined')]);
+//     if (typeof array[indexArray] === 'string') {
+//       result = array[indexArray];
+//     // } else if (param === 'default') {
+//     //   result = null;
+//     } else {
+//       result = param;
+//     }
+//     return result;
+//   }
+  
+//   export default extract;
